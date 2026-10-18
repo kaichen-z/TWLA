@@ -1,0 +1,221 @@
+{
+  "variant": "d",
+  "seed": 0,
+  "batch_size": 64,
+  "num_workers": 18,
+  "prefetch_factor": 1,
+  "max_steps": 110000,
+  "log_every": 50,
+  "val_every": 110000,
+  "save_every": 2000,
+  "snapshot_for_validator": false,
+  "output_dir": "${VLA_RUNS}/twla",
+  "data": {
+    "root": "${VLA_DATA}",
+    "sources": [
+      {
+        "name": "epic30",
+        "video_root": "epic_vitra/Video/Epic-Kitchen_root",
+        "annotation_file": "epic30_ours_v2/episode_frame_index.npz",
+        "label_folder": "epic30_ours_v2",
+        "jpeg_root": "preprocessed/epic30_ours_v2_jpeg",
+        "split_dir": "splits/epic30_v5",
+        "weight": 0.2654
+      },
+      {
+        "name": "egotouch",
+        "video_root": "et_video",
+        "annotation_file": "egotouch_ours/episode_frame_index.npz",
+        "label_folder": "egotouch_ours/episodic_annotations",
+        "jpeg_root": "preprocessed/egotouch_jpeg",
+        "split_dir": "splits/egotouch_v2",
+        "weight": 0.3694
+      },
+      {
+        "name": "gigahands",
+        "video_root": "gigahands_vitra_mano_strict_v1/Video/GigaHands_root",
+        "annotation_file": "gigahands_ours/episode_frame_index.npz",
+        "label_folder": "gigahands_ours/episodic_annotations",
+        "jpeg_root": "preprocessed/gigahands_jpeg",
+        "split_dir": "splits/gigahands_v1",
+        "weight": 0.2811
+      },
+      {
+        "name": "egoexo4d",
+        "video_root": "egoexo4d_OFFICIAL/undistorted",
+        "annotation_file": "vitra1m_egoexo4d/egoexo4d/episode_frame_index.npz",
+        "label_folder": "vitra1m_egoexo4d/egoexo4d/episodic_annotations",
+        "jpeg_root": "preprocessed/egoexo4d_jpeg",
+        "split_dir": "splits/egoexo4d_v1",
+        "weight": 0.2962
+      },
+      {
+        "name": "oakink2",
+        "video_root": "oakink2_vitra_streaming_v1/Video/OakInk2_root",
+        "annotation_file": "oakink2_ours/episode_frame_index.npz",
+        "label_folder": "oakink2_ours/episodic_annotations",
+        "jpeg_root": "preprocessed/oakink2_jpeg",
+        "split_dir": "splits/oakink2_v2",
+        "weight": 0.2275
+      },
+      {
+        "name": "taco",
+        "video_root": "taco_raw/v1/Egocentric_RGB_Videos_x/Egocentric_RGB_Videos",
+        "annotation_file": "taco_ours/episode_frame_index.npz",
+        "label_folder": "taco_ours/episodic_annotations",
+        "jpeg_root": "preprocessed/taco_jpeg",
+        "split_dir": "splits/taco_v1",
+        "weight": 0.278
+      },
+      {
+        "name": "hot3d",
+        "video_root": "hot3d_vitra_atomic_v1/Video/HOT3D_root",
+        "annotation_file": "hot3d_ours/episode_frame_index.npz",
+        "label_folder": "hot3d_ours/episodic_annotations",
+        "jpeg_root": "preprocessed/hot3d_jpeg",
+        "split_dir": "splits/hot3d_v2",
+        "weight": 0.3513
+      },
+      {
+        "name": "arctic",
+        "video_root": "arctic_vitra/Video/arctic_root",
+        "annotation_file": "arctic_vitra/arctic/episode_frame_index.npz",
+        "label_folder": "arctic_vitra/arctic/episodic_annotations",
+        "jpeg_root": "preprocessed/arctic_jpeg",
+        "split_dir": "splits/arctic_v1",
+        "weight": 0.3142
+      },
+      {
+        "name": "h2o",
+        "video_root": "h2o_vitra/Video/h2o_root",
+        "annotation_file": "h2o_ours/episode_frame_index.npz",
+        "label_folder": "h2o_ours/episodic_annotations",
+        "jpeg_root": "preprocessed/h2o_jpeg",
+        "split_dir": "splits/h2o_v2",
+        "weight": 0.4535
+      },
+      {
+        "name": "tachin",
+        "video_root": "tachin_precut_v1",
+        "annotation_file": "tachin_ours/episode_frame_index.npz",
+        "label_folder": "tachin_ours/episodic_annotations",
+        "jpeg_root": "preprocessed/tachin_jpeg",
+        "split_dir": "splits/tachin_v2",
+        "weight": 1.0
+      }
+    ],
+    "statistics": "splits/ten_v3/stats_80hz.json"
+  },
+  "config": {
+    "optim": {
+      "lr": 0.0001,
+      "warmup_steps": 1000,
+      "decay_steps": 110000,
+      "final_lr": 2.5e-06,
+      "betas": [
+        0.9,
+        0.95
+      ],
+      "eps": 1e-08,
+      "schedule_offset": 0,
+      "lr_expert": null,
+      "expert_warmup_steps": 1000,
+      "lr_vlm": null,
+      "constant_after_warmup": false,
+      "plateau_factor": 0.0,
+      "plateau_patience": 3,
+      "plateau_threshold": 0.0003,
+      "plateau_min_lr": 2.5e-06,
+      "weight_decay": 0.0,
+      "grad_clip": 1.0,
+      "grad_accum_steps": 1,
+      "bf16": true,
+      "no_decay_ndim_max": 1,
+      "no_decay_name_parts": [
+        "query",
+        "emb",
+        "action_pos",
+        "logit_scale",
+        "g_attn",
+        "g_ffn"
+      ]
+    },
+    "world": {
+      "freeze_v4": false,
+      "freeze_head": false,
+      "lr_adapter": 3e-05,
+      "lr_sana": 3e-05,
+      "horizon_inject": "modulation",
+      "loss": {
+        "horizon_frames": [
+          3,
+          6
+        ],
+        "lam_warmup_steps": 2000,
+        "reserve_anchors": 1,
+        "horizon_weights": null,
+        "tau_low": 0.0,
+        "tau_high": 1.0,
+        "domain_lam_mode": "off",
+        "domain_lam_fixed": null,
+        "domain_lam_start": 0,
+        "domain_lam_ema": 0.9,
+        "domain_lam_rule": "sign",
+        "domain_lam_threshold": 0.0,
+        "domain_lam_scale": 0.05,
+        "domain_lam_min": 0.0,
+        "lam_schedule": [
+          [
+            0,
+            2.0
+          ],
+          [
+            50000,
+            4.0
+          ],
+          [
+            78000,
+            0.0
+          ]
+        ]
+      }
+    },
+    "flow": {
+      "draws_per_condition": 1,
+      "time_beta_alpha": 1.5,
+      "time_beta_beta": 1.0,
+      "time_scale": 0.999,
+      "time_offset": 0.001,
+      "component_weights": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "horizon_weights": null
+    },
+    "vlm": {
+      "freeze_vision": true,
+      "freeze_connector": true,
+      "freeze_embeddings": true,
+      "train_top_k_layers": 0
+    },
+    "train": {
+      "max_seq_len": 9,
+      "length_alpha": 1.0,
+      "log_length_histogram": true,
+      "state_dropout": 0.0,
+      "memory_dropout": 0.0,
+      "freeze_expert": false,
+      "freeze_extra": []
+    },
+    "data": {
+      "stride": 3,
+      "interpolation": "pchip_bone_preserving",
+      "geometric_augmentation": false,
+      "random_paraphrase": true
+    }
+  }
+}

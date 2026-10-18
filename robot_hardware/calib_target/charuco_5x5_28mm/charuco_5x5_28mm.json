@@ -1,0 +1,14 @@
+{
+  "type": "charuco",
+  "dictionary": "DICT_APRILTAG_36h11",
+  "squares_x": 5,
+  "squares_y": 5,
+  "square_length_m": 0.028,
+  "marker_length_m": 0.02,
+  "board_outer_mm": [
+    160.0,
+    160.0
+  ],
+  "legacy_pattern": false,
+  "note": "Replace square_length_m with the value measured after printing."
+}

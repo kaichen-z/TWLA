@@ -1,0 +1,44 @@
+{
+  "schema": "active_calib/v1",
+  "note": [
+    "Single source of truth for the hand-eye calibration in use. To switch calibration, edit this file; do not edit code. Read through tools/active_calib.py.",
+    "Convention: q_true = q_meas + joint_offsets_rad (motor order, radians). J1 of the reference arm and J7 are fixed to 0.",
+    "Replace the two 'from' entries with the joint_result.json written by tools/handeye_joint_solve.py (path relative to this directory)."
+  ],
+  "board_square_nominal_m": 0.028,
+  "camera": {
+    "from": "handeye_<timestamp>/joint_result.json"
+  },
+  "arms": {
+    "right": {
+      "from": "handeye_<timestamp>/joint_result.json",
+      "ok": true
+    },
+    "left": {
+      "from": "handeye_<timestamp>/joint_result.json",
+      "ok": false,
+      "warn": "No joint offsets for this arm in the result file; zeros are used."
+    }
+  },
+  "hand_mount": {
+    "note": "Transform from the last arm joint frame (wrist roll, tool0) to the L6 hand_base_link. End-to-end value for the standard mounting. Code entry: robot/conventions.hand_mount_T() and active_calib.load().",
+    "xyz_in_wrist_roll_m": [
+      -0.0225,
+      0.0,
+      -0.0705
+    ],
+    "rpy": {
+      "right": [
+        3.1416,
+        0.0,
+        1.5708
+      ],
+      "left": [
+        3.1416,
+        0.0,
+        -1.5708
+      ]
+    },
+    "extra_shim_m": 0.0
+  }
+}

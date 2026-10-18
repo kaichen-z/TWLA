@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "twla-tactile-editor"
+version = "0.1.0"
+description = "Offline tactile residual editing with optional RGB and tactile prediction losses"
+requires-python = ">=3.10"
+dependencies = ["torch>=2.4", "numpy>=1.24", "scipy>=1.10", "safetensors>=0.4", "huggingface_hub>=0.24"]
+
+[project.optional-dependencies]
+test = ["pytest>=7"]
+world = ["diffusers>=0.32", "transformers", "accelerate", "sentencepiece"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

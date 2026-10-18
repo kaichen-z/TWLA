@@ -1,0 +1,42 @@
+{
+ "model": "vitra_original",
+ "output_dir": "${VLA_RUNS}/vitra_original",
+ "data": {
+  "root": "${VLA_DATA}",
+  "statistics": "splits/baseline_g3_angle/stats_80hz_angle.json",
+  "sources": [
+   {
+    "name": "gigahands",
+    "video_root": "gigahands_vitra_mano_strict_v1/Video/GigaHands_root",
+    "annotation_file": "gigahands_ours/episode_frame_index.npz",
+    "label_folder": "gigahands_ours/episodic_annotations",
+    "jpeg_root": "preprocessed/gigahands_jpeg",
+    "split_dir": "splits/gigahands_v1",
+    "weight": 0.2811
+   },
+   {
+    "name": "oakink2",
+    "video_root": "oakink2_vitra_streaming_v1/Video/OakInk2_root",
+    "annotation_file": "oakink2_ours/episode_frame_index.npz",
+    "label_folder": "oakink2_ours/episodic_annotations",
+    "jpeg_root": "preprocessed/oakink2_jpeg",
+    "split_dir": "splits/oakink2_v2",
+    "weight": 0.2275
+   },
+   {
+    "name": "taco",
+    "video_root": "taco_raw/v1/Egocentric_RGB_Videos_x/Egocentric_RGB_Videos",
+    "annotation_file": "taco_ours/episode_frame_index.npz",
+    "label_folder": "taco_ours/episodic_annotations",
+    "jpeg_root": "preprocessed/taco_jpeg",
+    "split_dir": "splits/taco_v1",
+    "weight": 0.278
+   }
+  ]
+ },
+ "config": {
+  "action": {
+   "action_type": "angle"
+  }
+ }
+}

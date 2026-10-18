@@ -1,0 +1,17 @@
+# utils3d has no usable version numbers; this is the commit the augmentation code was written against.
+utils3d @ git+https://github.com/EasternJournalist/utils3d.git@d790d33#egg=utils3d
+
+# SmolVLM2 and the `dtype=` argument of from_pretrained need a recent release.
+transformers>=5.13.0
+
+torch
+numpy
+scipy
+scikit-image
+opencv-python
+pillow
+decord
+ffmpeg-python
+tqdm
+huggingface_hub
+diffusers          # world model only

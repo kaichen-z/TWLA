@@ -1,0 +1,965 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Dual-arm A7 model, merged from a7__left.urdf + a7__right.urdf by make_dual_a7_urdf.py.
+     Shared Base_Link on the floor; both shoulder bases at z = 1.217 m. -->
+<robot name="dual_a7">
+<link
+    name="Base_Link">
+    <inertial>
+      <origin
+        xyz="-0.00222338943153113 -7.21477586634144E-07 0.290469759753077"
+        rpy="0 0 0" />
+      <mass
+        value="11.5498443972996" />
+      <inertia
+        ixx="0.5885597835799"
+        ixy="3.1554820713728E-09"
+        ixz="-0.000471193074627488"
+        iyy="0.58795222479349"
+        iyz="4.94265597646443E-08"
+        izz="0.468956501545227" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://lens_dual_arm_description/meshes/Base_Link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://lens_dual_arm_description/meshes/Base_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  
+  <link
+    name="Left_Shoulder_Base_Link">
+    <inertial>
+      <origin
+        xyz="2.39576381628158E-09 0.0659218361820017 -2.93705990639381E-08"
+        rpy="0 0 0" />
+      <mass
+        value="0.924033111595577" />
+      <inertia
+        ixx="0.000808213882209898"
+        ixy="3.59894954693013E-11"
+        ixz="-8.08905421826288E-09"
+        iyy="0.000931574847368187"
+        iyz="-3.4664321606015E-10"
+        izz="0.000673662555330586" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://lens_dual_arm_description/meshes/Left_Shoulder_Base_Link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.890196078431372 0.890196078431372 0.913725490196078 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://lens_dual_arm_description/meshes/Left_Shoulder_Base_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="Left_Shoulder_Base_Joint"
+    type="fixed">
+    <origin
+      xyz="0 0 1.217"
+      rpy="0 0 0" />
+    <parent
+      link="Base_Link" />
+    <child
+      link="Left_Shoulder_Base_Link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="Left_Shoulder_Pitch_Link">
+    <inertial>
+      <origin
+        xyz="0.00054854355587839 0.0663441584679468 -4.15012326060449E-07"
+        rpy="0 0 0" />
+      <mass
+        value="1.03708373928272" />
+      <inertia
+        ixx="0.000979917881977378"
+        ixy="-4.19930467638723E-05"
+        ixz="2.31327737820334E-11"
+        iyy="0.000606132157414063"
+        iyz="-4.38206813372292E-10"
+        izz="0.000805446122113303" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://lens_dual_arm_description/meshes/Left_Shoulder_Pitch_Link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.890196078431372 0.890196078431372 0.913725490196078 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://lens_dual_arm_description/meshes/Left_Shoulder_Pitch_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="Left_Shoulder_Pitch_Joint"
+    type="revolute">
+    <origin
+      xyz="0 0.096 0"
+      rpy="0 0 0" />
+    <parent
+      link="Left_Shoulder_Base_Link" />
+    <child
+      link="Left_Shoulder_Pitch_Link" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      lower="-2.97"
+      upper="1.05"
+      effort="80"
+      velocity="10" />
+  </joint>
+  <link
+    name="Left_Shoulder_Roll_Link">
+    <inertial>
+      <origin
+        xyz="-0.0328266103103039 -1.13122606414384E-05 -0.0818731842645899"
+        rpy="0 0 0" />
+      <mass
+        value="0.611930821491615" />
+      <inertia
+        ixx="0.000491318005531021"
+        ixy="6.18222684267692E-11"
+        ixz="-5.06965158683244E-07"
+        iyy="0.000474502799979439"
+        iyz="-2.58696555442765E-08"
+        izz="0.000257744883873199" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://lens_dual_arm_description/meshes/Left_Shoulder_Roll_Link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.890196078431372 0.890196078431372 0.913725490196078 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://lens_dual_arm_description/meshes/Left_Shoulder_Roll_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="Left_Shoulder_Roll_Joint"
+    type="revolute">
+    <origin
+      xyz="0.0328 0.075 0"
+      rpy="0 0 0" />
+    <parent
+      link="Left_Shoulder_Pitch_Link" />
+    <child
+      link="Left_Shoulder_Roll_Link" />
+    <axis
+      xyz="1 0 0" />
+    <limit
+      lower="-0.35"
+      upper="3.49"
+      effort="80"
+      velocity="10" />
+  </joint>
+  <link
+    name="Left_Shoulder_Yaw_Link">
+    <inertial>
+      <origin
+        xyz="0.00682314676154193 -4.46512945422306E-05 -0.130199530724097"
+        rpy="0 0 0" />
+      <mass
+        value="0.600776606697813" />
+      <inertia
+        ixx="0.000473916613527744"
+        ixy="7.72324077414514E-08"
+        ixz="5.90958237468834E-06"
+        iyy="0.000448035733659396"
+        iyz="1.79115600065077E-07"
+        izz="0.000256235205802589" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://lens_dual_arm_description/meshes/Left_Shoulder_Yaw_Link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.890196078431372 0.890196078431372 0.913725490196078 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://lens_dual_arm_description/meshes/Left_Shoulder_Yaw_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="Left_Shoulder_Yaw_Joint"
+    type="revolute">
+    <origin
+      xyz="-0.0328 0 -0.12"
+      rpy="0 0 0" />
+    <parent
+      link="Left_Shoulder_Roll_Link" />
+    <child
+      link="Left_Shoulder_Yaw_Link" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-2.79"
+      upper="2.79"
+      effort="36"
+      velocity="10" />
+  </joint>
+  <link
+    name="Left_Elbow_Pitch_Link">
+    <inertial>
+      <origin
+        xyz="-0.0090403654310206 0.032365117715688 -0.0740066379621661"
+        rpy="0 0 0" />
+      <mass
+        value="0.571822387207262" />
+      <inertia
+        ixx="0.000373566335968375"
+        ixy="-3.30108379286696E-08"
+        ixz="-1.15594926282846E-05"
+        iyy="0.000376125485331464"
+        iyz="1.49444070657373E-07"
+        izz="0.000228220814310663" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://lens_dual_arm_description/meshes/Left_Elbow_Pitch_Link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.890196078431372 0.890196078431372 0.913725490196078 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://lens_dual_arm_description/meshes/Left_Elbow_Pitch_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="Left_Elbow_Pitch_Joint"
+    type="revolute">
+    <origin
+      xyz="0.0095 -0.0325 -0.15"
+      rpy="0 0 0" />
+    <parent
+      link="Left_Shoulder_Yaw_Link" />
+    <child
+      link="Left_Elbow_Pitch_Link" />
+    <axis
+      xyz="0 -1 0" />
+    <limit
+      lower="-0.21"
+      upper="2.355"
+      effort="36"
+      velocity="10" />
+  </joint>
+  <link
+    name="Left_Wrist_Yaw_Link">
+    <inertial>
+      <origin
+        xyz="3.69740452762102E-08 0.00647895756262068 -0.0555903355087713"
+        rpy="0 0 0" />
+      <mass
+        value="0.477607109369943" />
+      <inertia
+        ixx="0.000252009679930231"
+        ixy="2.56556791795388E-10"
+        ixz="8.40673606830403E-10"
+        iyy="0.000230774325731339"
+        iyz="-1.45571201182614E-05"
+        izz="0.000223888344087184" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://lens_dual_arm_description/meshes/Left_Wrist_Yaw_Link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.890196078431372 0.890196078431372 0.913725490196078 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://lens_dual_arm_description/meshes/Left_Wrist_Yaw_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="Left_Wrist_Yaw_Joint"
+    type="revolute">
+    <origin
+      xyz="-0.0095 0.0325 -0.11"
+      rpy="0 0 0" />
+    <parent
+      link="Left_Elbow_Pitch_Link" />
+    <child
+      link="Left_Wrist_Yaw_Link" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-2.79"
+      upper="2.79"
+      effort="36"
+      velocity="10" />
+  </joint>
+  <link
+    name="Left_Wrist_Pitch_Link">
+    <inertial>
+      <origin
+        xyz="-0.00711282233334451 0.0182114323933808 -0.0596299986813169"
+        rpy="0 0 0" />
+      <mass
+        value="0.463906587613134" />
+      <inertia
+        ixx="0.000227880683675111"
+        ixy="-2.49113311913961E-06"
+        ixz="5.38703832935156E-06"
+        iyy="0.00026785366981276"
+        iyz="7.22420737435019E-06"
+        izz="0.000199800671841578" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://lens_dual_arm_description/meshes/Left_Wrist_Pitch_Link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.890196078431372 0.890196078431372 0.913725490196078 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://lens_dual_arm_description/meshes/Left_Wrist_Pitch_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="Left_Wrist_Pitch_Joint"
+    type="revolute">
+    <origin
+      xyz="0 -0.022 -0.06"
+      rpy="0 0 0" />
+    <parent
+      link="Left_Wrist_Yaw_Link" />
+    <child
+      link="Left_Wrist_Pitch_Link" />
+    <axis
+      xyz="0 -1 0" />
+    <limit
+      lower="-1.57"
+      upper="1.57"
+      effort="36"
+      velocity="10" />
+  </joint>
+  <link
+    name="Left_Wrist_Roll_Link">
+    <inertial>
+      <origin
+        xyz="-0.0072702259987953 2.82402962126227E-10 -0.0363234197668264"
+        rpy="0 0 0" />
+      <mass
+        value="0.0737528636640965" />
+      <inertia
+        ixx="5.50396554373168E-05"
+        ixy="-8.73979570437831E-14"
+        ixz="-1.46653059719208E-05"
+        iyy="5.80308714819392E-05"
+        iyz="-4.48880508094499E-13"
+        izz="4.14743760983864E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://lens_dual_arm_description/meshes/Left_Wrist_Roll_Link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.890196078431372 0.890196078431372 0.913725490196078 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://lens_dual_arm_description/meshes/Left_Wrist_Roll_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="Left_Wrist_Roll_Joint"
+    type="revolute">
+    <origin
+      xyz="0.0225 0.022 -0.064"
+      rpy="0 0 0" />
+    <parent
+      link="Left_Wrist_Pitch_Link" />
+    <child
+      link="Left_Wrist_Roll_Link" />
+    <axis
+      xyz="1 0 0" />
+    <limit
+      lower="-1.57"
+      upper="1.57"
+      effort="36"
+      velocity="10" />
+  </joint>
+  
+  <link
+    name="Right_Shoulder_Base_Link">
+    <inertial>
+      <origin
+        xyz="-1.99267264776488E-09 -0.0659218361820058 3.30808307413832E-08"
+        rpy="0 0 0" />
+      <mass
+        value="0.924033111595576" />
+      <inertia
+        ixx="0.000808213882214251"
+        ixy="2.95678180150087E-11"
+        ixz="8.08908965209071E-09"
+        iyy="0.000931574847368185"
+        iyz="-4.02248117355149E-10"
+        izz="0.000673662555326232" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://lens_dual_arm_description/meshes/Right_Shoulder_Base_Link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.898039215686275 0.917647058823529 0.929411764705882 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://lens_dual_arm_description/meshes/Right_Shoulder_Base_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="Right_Shoulder_Base_Joint"
+    type="fixed">
+    <origin
+      xyz="0 0 1.217"
+      rpy="0 0 0" />
+    <parent
+      link="Base_Link" />
+    <child
+      link="Right_Shoulder_Base_Link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="Right_Shoulder_Pitch_Link">
+    <inertial>
+      <origin
+        xyz="0.000550445937296118 -0.0663446867698749 3.85924345147615E-07"
+        rpy="0 0 0" />
+      <mass
+        value="1.03708373831885" />
+      <inertia
+        ixx="0.000979917881985241"
+        ixy="4.19930465301815E-05"
+        ixz="-2.22495649895194E-11"
+        iyy="0.0006061320567727"
+        iyz="4.72594631084341E-10"
+        izz="0.000805446222765678" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://lens_dual_arm_description/meshes/Right_Shoulder_Pitch_Link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.890196078431372 0.890196078431372 0.913725490196078 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://lens_dual_arm_description/meshes/Right_Shoulder_Pitch_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="Right_Shoulder_Pitch_Joint"
+    type="revolute">
+    <origin
+      xyz="0 -0.096 0"
+      rpy="0 0 0" />
+    <parent
+      link="Right_Shoulder_Base_Link" />
+    <child
+      link="Right_Shoulder_Pitch_Link" />
+    <axis
+      xyz="0 -1 0" />
+    <limit
+      lower="-1.05"
+      upper="2.97"
+      effort="80"
+      velocity="10" />
+  </joint>
+  <link
+    name="Right_Shoulder_Roll_Link">
+    <inertial>
+      <origin
+        xyz="-0.0328494705864756 -5.65907654070941E-10 -0.0818728578417687"
+        rpy="0 0 0" />
+      <mass
+        value="0.61158472274931" />
+      <inertia
+        ixx="0.000491306613863732"
+        ixy="6.1822268286409E-11"
+        ixz="-5.06965158681799E-07"
+        iyy="0.000474492050561758"
+        iyz="-2.5869655543651E-08"
+        izz="0.000257742401525433" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://lens_dual_arm_description/meshes/Right_Shoulder_Roll_Link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.898039215686275 0.917647058823529 0.929411764705882 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://lens_dual_arm_description/meshes/Right_Shoulder_Roll_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="Right_Shoulder_Roll_Joint"
+    type="revolute">
+    <origin
+      xyz="0.0328 -0.075 0"
+      rpy="0 0 0" />
+    <parent
+      link="Right_Shoulder_Pitch_Link" />
+    <child
+      link="Right_Shoulder_Roll_Link" />
+    <axis
+      xyz="1 0 0" />
+    <limit
+      lower="-3.49"
+      upper="0.35"
+      effort="80"
+      velocity="10" />
+  </joint>
+  <link
+    name="Right_Shoulder_Yaw_Link">
+    <inertial>
+      <origin
+        xyz="0.00682314676154521 -4.46512945424526E-05 -0.130199530724097"
+        rpy="0 0 0" />
+      <mass
+        value="0.600776606697812" />
+      <inertia
+        ixx="0.000473916613527744"
+        ixy="7.72324077414352E-08"
+        ixz="5.90958237468826E-06"
+        iyy="0.000448035733659395"
+        iyz="1.79115600066026E-07"
+        izz="0.000256235205802589" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://lens_dual_arm_description/meshes/Right_Shoulder_Yaw_Link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.890196078431372 0.890196078431372 0.913725490196078 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://lens_dual_arm_description/meshes/Right_Shoulder_Yaw_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="Right_Shoulder_Yaw_Joint"
+    type="revolute">
+    <origin
+      xyz="-0.0328 0 -0.12"
+      rpy="0 0 0" />
+    <parent
+      link="Right_Shoulder_Roll_Link" />
+    <child
+      link="Right_Shoulder_Yaw_Link" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-2.79"
+      upper="2.79"
+      effort="36"
+      velocity="10" />
+  </joint>
+  <link
+    name="Right_Elbow_Pitch_Link">
+    <inertial>
+      <origin
+        xyz="-0.0090491523715236 0.0323897268652624 -0.0740069723660367"
+        rpy="0 0 0" />
+      <mass
+        value="0.571476288532121" />
+      <inertia
+        ixx="0.000373555591273092"
+        ixy="-3.30108376678752E-08"
+        ixz="-1.15595088255074E-05"
+        iyy="0.000376114093665451"
+        iyz="1.49444083196836E-07"
+        izz="0.00022821832724163" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://lens_dual_arm_description/meshes/Right_Elbow_Pitch_Link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://lens_dual_arm_description/meshes/Right_Elbow_Pitch_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="Right_Elbow_Pitch_Joint"
+    type="revolute">
+    <origin
+      xyz="0.0095 -0.0325 -0.15"
+      rpy="0 0 0" />
+    <parent
+      link="Right_Shoulder_Yaw_Link" />
+    <child
+      link="Right_Elbow_Pitch_Link" />
+    <axis
+      xyz="0 -1 0" />
+    <limit
+      lower="-0.21"
+      upper="2.355"
+      effort="36"
+      velocity="10" />
+  </joint>
+  <link
+    name="Right_Wrist_Yaw_Link">
+    <inertial>
+      <origin
+        xyz="-3.68521239685251E-08 -0.0065016641372202 -0.0555925647837076"
+        rpy="0 0 0" />
+      <mass
+        value="0.47758723622525" />
+      <inertia
+        ixx="0.000252124777274285"
+        ixy="2.5638314061415E-10"
+        ixz="-8.40240519042393E-10"
+        iyy="0.00023075116324108"
+        iyz="1.49094977439206E-05"
+        izz="0.000224026583523099" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://lens_dual_arm_description/meshes/Right_Wrist_Yaw_Link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.890196078431372 0.890196078431372 0.913725490196078 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://lens_dual_arm_description/meshes/Right_Wrist_Yaw_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="Right_Wrist_Yaw_Joint"
+    type="revolute">
+    <origin
+      xyz="-0.0095 0.0325 -0.11"
+      rpy="0 0 0" />
+    <parent
+      link="Right_Elbow_Pitch_Link" />
+    <child
+      link="Right_Wrist_Yaw_Link" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-2.79"
+      upper="2.79"
+      effort="36"
+      velocity="10" />
+  </joint>
+  <link
+    name="Right_Wrist_Pitch_Link">
+    <inertial>
+      <origin
+        xyz="-0.00712530104384592 -0.0182054860115446 -0.0596462537825272"
+        rpy="0 0 0" />
+      <mass
+        value="0.464091420162859" />
+      <inertia
+        ixx="0.000228236803974143"
+        ixy="2.40015869616491E-06"
+        ixz="5.18112746327142E-06"
+        iyy="0.000268369019194987"
+        iyz="-7.34023927836005E-06"
+        izz="0.000199899053944628" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://lens_dual_arm_description/meshes/Right_Wrist_Pitch_Link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.898039215686275 0.917647058823529 0.929411764705882 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://lens_dual_arm_description/meshes/Right_Wrist_Pitch_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="Right_Wrist_Pitch_Joint"
+    type="revolute">
+    <origin
+      xyz="0 0.022 -0.06"
+      rpy="0 0 0" />
+    <parent
+      link="Right_Wrist_Yaw_Link" />
+    <child
+      link="Right_Wrist_Pitch_Link" />
+    <axis
+      xyz="0 1 0" />
+    <limit
+      lower="-1.57"
+      upper="1.57"
+      effort="36"
+      velocity="10" />
+  </joint>
+  <link
+    name="Right_Wrist_Roll_Link">
+    <inertial>
+      <origin
+        xyz="-0.00727022599879533 2.82407791596384E-10 -0.0363234197668277"
+        rpy="0 0 0" />
+      <mass
+        value="0.073752863664096" />
+      <inertia
+        ixx="5.50396554373169E-05"
+        ixy="-8.73979797649329E-14"
+        ixz="-1.46653059719206E-05"
+        iyy="5.8030871481939E-05"
+        iyz="-4.48880576916881E-13"
+        izz="4.14743760983857E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://lens_dual_arm_description/meshes/Right_Wrist_Roll_Link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.890196078431372 0.890196078431372 0.913725490196078 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://lens_dual_arm_description/meshes/Right_Wrist_Roll_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="Right_Wrist_Roll_Joint"
+    type="revolute">
+    <origin
+      xyz="0.0225 -0.022 -0.064"
+      rpy="0 0 0" />
+    <parent
+      link="Right_Wrist_Pitch_Link" />
+    <child
+      link="Right_Wrist_Roll_Link" />
+    <axis
+      xyz="1 0 0" />
+    <limit
+      lower="-1.57"
+      upper="1.57"
+      effort="36"
+      velocity="10" />
+  </joint>
+</robot>

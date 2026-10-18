@@ -1,0 +1,32 @@
+# Local credentials and environment settings
+.env
+.env.*
+!.env.example
+!.env.sample
+
+# Python environments and generated caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+.venv/
+venv/
+
+# Downloaded weights and generated experiment artifacts
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+/checkpoints/
+/data/
+/datasets/
+/runs/
+/outputs/
+/logs/
+/wandb/
+
+# Local operating-system files
+.DS_Store
+Thumbs.db

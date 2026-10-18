@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vive Tracker view</title>
+<style>
+  :root{
+    --bg:#0e1116; --panel:#161b22; --line:#232a34; --fg:#e6edf3; --dim:#8b949e;
+    --ok:#3fb950; --bad:#f85149; --accent:#58a6ff;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);
+    font:13px/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;overflow:hidden}
+  #cv{display:block;width:100vw;height:100vh;cursor:grab}
+  #cv.drag{cursor:grabbing}
+  .panel{position:fixed;background:rgba(22,27,34,.92);border:1px solid var(--line);
+    border-radius:8px;padding:10px 12px;backdrop-filter:blur(6px)}
+  #hud{top:12px;left:12px;min-width:330px;max-height:calc(100vh - 24px);overflow:auto}
+  #help{bottom:12px;left:12px;color:var(--dim);font-size:12px}
+  h1{margin:0 0 8px;font-size:13px;font-weight:600;letter-spacing:.02em}
+  .meta{color:var(--dim);font-size:11px;margin-bottom:10px}
+  .dev{border-top:1px solid var(--line);padding:8px 0 6px}
+  .dev:first-of-type{border-top:0}
+  .name{display:flex;align-items:center;gap:7px;font-weight:600;margin-bottom:3px}
+  .dot{width:8px;height:8px;border-radius:50%;flex:0 0 auto}
+  .kind{color:var(--dim);font-weight:400;font-size:11px}
+  .row{display:flex;gap:10px;color:var(--dim);font-size:12px}
+  .row b{color:var(--fg);font-weight:500;font-variant-numeric:tabular-nums}
+  .warn{color:var(--bad)}
+  .rel{margin-top:10px;padding-top:8px;border-top:1px dashed var(--line);color:var(--accent)}
+  kbd{background:#21262d;border:1px solid var(--line);border-radius:4px;padding:0 5px}
+</style>
+</head>
+<body>
+<canvas id="cv"></canvas>
+<div class="panel" id="hud"></div>
+<div class="panel" id="help">
+  left drag: rotate · wheel: zoom · right drag: pan · <kbd>R</kbd> reset view · <kbd>C</kbd> clear trails
+</div>
+
+<script>
+"use strict";
+// ---------------------------------------------------------------- 3D
+// OpenVR convention: right-handed, +Y up, metres. Vectors are [x,y,z] arrays.
+const sub=(a,b)=>[a[0]-b[0],a[1]-b[1],a[2]-b[2]];
+const add=(a,b)=>[a[0]+b[0],a[1]+b[1],a[2]+b[2]];
+const mul=(a,s)=>[a[0]*s,a[1]*s,a[2]*s];
+const dot=(a,b)=>a[0]*b[0]+a[1]*b[1]+a[2]*b[2];
+const cross=(a,b)=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]];
+const norm=a=>{const l=Math.hypot(...a)||1;return[a[0]/l,a[1]/l,a[2]/l]};
+const dist=(a,b)=>Math.hypot(a[0]-b[0],a[1]-b[1],a[2]-b[2]);
+
+// ---------------------------------------------------------------- camera
+const cam = {az:0.7, el:0.35, d:4.0, target:[0,0,0], targeted:false};
+const DEFAULT = {az:0.7, el:0.35, d:4.0};
+
+function camPos(){
+  const ce=Math.cos(cam.el), se=Math.sin(cam.el);
+  return add(cam.target,[cam.d*ce*Math.sin(cam.az), cam.d*se, cam.d*ce*Math.cos(cam.az)]);
+}
+function basis(){
+  const eye=camPos();
+  const fwd=norm(sub(cam.target,eye));
+  const right=norm(cross(fwd,[0,1,0]));
+  const up=cross(right,fwd);
+  return {eye,fwd,right,up};
+}
+/** World point -> screen point; null behind the camera. */
+function project(p,B,W,H){
+  const v=sub(p,B.eye);
+  const z=dot(v,B.fwd);
+  if(z<=0.02) return null;
+  const f=Math.min(W,H)*0.9;
+  return [W/2 + f*dot(v,B.right)/z, H/2 - f*dot(v,B.up)/z, z];
+}
+
+// ---------------------------------------------------------------- canvas
+const cv=document.getElementById('cv'), ctx=cv.getContext('2d');
+let W=0,H=0,DPR=1;
+function resize(){
+  DPR=window.devicePixelRatio||1;
+  W=cv.clientWidth; H=cv.clientHeight;
+  cv.width=W*DPR; cv.height=H*DPR;
+  ctx.setTransform(DPR,0,0,DPR,0,0);
+}
+window.addEventListener('resize',resize); resize();
+
+// ---------------------------------------------------------------- interaction
+let drag=null;
+cv.addEventListener('mousedown',e=>{drag={x:e.clientX,y:e.clientY,btn:e.button};cv.classList.add('drag')});
+window.addEventListener('mouseup',()=>{drag=null;cv.classList.remove('drag')});
+window.addEventListener('mousemove',e=>{
+  if(!drag) return;
+  const dx=e.clientX-drag.x, dy=e.clientY-drag.y;
+  drag.x=e.clientX; drag.y=e.clientY;
+  if(drag.btn===0){
+    cam.az-=dx*0.008;
+    cam.el=Math.max(-1.45,Math.min(1.45,cam.el+dy*0.008));
+  }else{
+    const B=basis(), k=cam.d*0.0016;
+    cam.target=add(cam.target,add(mul(B.right,-dx*k),mul(B.up,dy*k)));
+  }
+});
+cv.addEventListener('contextmenu',e=>e.preventDefault());
+cv.addEventListener('wheel',e=>{
+  e.preventDefault();
+  cam.d=Math.max(0.25,Math.min(40,cam.d*Math.exp(e.deltaY*0.0012)));
+},{passive:false});
+window.addEventListener('keydown',e=>{
+  const k=e.key.toLowerCase();
+  if(k==='r'){Object.assign(cam,DEFAULT);cam.targeted=false}
+  if(k==='c'){trails.clear()}
+});
+
+// ---------------------------------------------------------------- data
+let state={devices:[],t:0,error:null};
+const trails=new Map();           // serial -> [[x,y,z],…]
+const TRAIL_MAX=900;
+const TRAIL_MIN_STEP=0.002;       // trail point every 2 mm of motion
+
+async function poll(){
+  try{
+    const r=await fetch('/api/poses',{cache:'no-store'});
+    state=await r.json();
+    for(const d of state.devices){
+      if(d.kind!=='tracker'||!d.valid) continue;
+      let t=trails.get(d.serial);
+      if(!t){t=[];trails.set(d.serial,t)}
+      const last=t[t.length-1];
+      if(!last||dist(last,d.pos)>TRAIL_MIN_STEP){
+        t.push(d.pos);
+        if(t.length>TRAIL_MAX) t.shift();
+      }
+    }
+    // on the first data, centre the view on the devices
+    if(!cam.targeted){
+      const v=state.devices.filter(d=>d.valid);
+      if(v.length){
+        cam.target=mul(v.reduce((a,d)=>add(a,d.pos),[0,0,0]),1/v.length);
+        cam.targeted=true;
+      }
+    }
+  }catch(err){ state={devices:[],t:0,error:'server not reachable: '+err.message}; }
+}
+setInterval(poll,33);   // ~30 Hz
+
+// ---------------------------------------------------------------- drawing
+function line(B,a,b,color,width){
+  const p=project(a,B,W,H), q=project(b,B,W,H);
+  if(!p||!q) return;
+  ctx.strokeStyle=color; ctx.lineWidth=width||1;
+  ctx.beginPath(); ctx.moveTo(p[0],p[1]); ctx.lineTo(q[0],q[1]); ctx.stroke();
+}
+
+function drawGrid(B,y){
+  const N=10, S=0.5;                       // 10 x 10 cells of 0.5 m
+  for(let i=-N;i<=N;i++){
+    const major = (i%2===0);
+    const c = major ? '#2b3440' : '#1c232c';
+    line(B,[i*S,y,-N*S],[i*S,y,N*S],c,1);
+    line(B,[-N*S,y,i*S],[N*S,y,i*S],c,1);
+  }
+}
+
+/** RGB axes (red X, green Y, blue Z) of length len (m) at a device. */
+function drawFrame(B,pos,rot,len){
+  const cols=['#f85149','#3fb950','#58a6ff'];
+  for(let c=0;c<3;c++){
+    // rot is row-major; column c is that axis in the world frame
+    const axis=[rot[0][c],rot[1][c],rot[2][c]];
+    line(B,pos,add(pos,mul(axis,len)),cols[c],2.5);
+  }
+}
+
+function drawMarker(B,pos,color,r){
+  const p=project(pos,B,W,H);
+  if(!p) return null;
+  ctx.fillStyle=color;
+  ctx.beginPath(); ctx.arc(p[0],p[1],r,0,Math.PI*2); ctx.fill();
+  return p;
+}
+
+function drawTrail(B,pts,color){
+  if(pts.length<2) return;
+  ctx.lineWidth=1.5;
+  for(let i=1;i<pts.length;i++){
+    const a=project(pts[i-1],B,W,H), b=project(pts[i],B,W,H);
+    if(!a||!b) continue;
+    ctx.globalAlpha=0.15+0.85*(i/pts.length);   // newer points brighter
+    ctx.strokeStyle=color;
+    ctx.beginPath(); ctx.moveTo(a[0],a[1]); ctx.lineTo(b[0],b[1]); ctx.stroke();
+  }
+  ctx.globalAlpha=1;
+}
+
+function draw(){
+  ctx.clearRect(0,0,W,H);
+  const B=basis();
+  const valid=state.devices.filter(d=>d.valid);
+
+  // floor grid slightly below the lowest device
+  const minY=valid.length?Math.min(...valid.map(d=>d.pos[1])):0;
+  drawGrid(B,minY-0.05);
+
+  // axes at the world origin
+  drawFrame(B,[0,0,0],[[1,0,0],[0,1,0],[0,0,1]],0.3);
+
+  for(const d of state.devices){
+    if(!d.valid) continue;
+    if(d.kind==='base'){
+      const p=drawMarker(B,d.pos,'#d29922',6);
+      if(p){ctx.fillStyle='#d29922';ctx.font='11px monospace';
+            ctx.fillText('base '+d.serial,p[0]+10,p[1]+4)}
+    }else if(d.kind==='tracker'){
+      drawTrail(B,trails.get(d.serial)||[],'#58a6ff');
+      drawFrame(B,d.pos,d.rot,0.15);
+      const p=drawMarker(B,d.pos,'#e6edf3',5);
+      if(p){ctx.fillStyle='#e6edf3';ctx.font='bold 12px monospace';
+            ctx.fillText(d.serial,p[0]+10,p[1]-6)}
+      // vertical line to show the height
+      line(B,d.pos,[d.pos[0],minY-0.05,d.pos[2]],'#30363d',1);
+    }
+  }
+
+  // line and distance between two trackers
+  const tk=state.devices.filter(d=>d.kind==='tracker'&&d.valid);
+  if(tk.length===2){
+    line(B,tk[0].pos,tk[1].pos,'#bc8cff',2);
+    const mid=mul(add(tk[0].pos,tk[1].pos),0.5);
+    const p=project(mid,B,W,H);
+    if(p){ctx.fillStyle='#bc8cff';ctx.font='bold 12px monospace';
+          ctx.fillText(dist(tk[0].pos,tk[1].pos).toFixed(4)+' m',p[0]+8,p[1])}
+  }
+
+  hud(tk);
+  requestAnimationFrame(draw);
+}
+
+function hud(tk){
+  const el=document.getElementById('hud');
+  if(state.error){
+    el.innerHTML=`<h1>Vive Tracker view</h1><div class="warn">${state.error}</div>`;
+    return;
+  }
+  const n3=v=>v.toFixed(4).padStart(8);
+  let h=`<h1>Vive Tracker view</h1>
+    <div class="meta">universe = raw (base station frame) · ${state.devices.length} devices · t = ${state.t.toFixed(1)} s</div>`;
+  for(const d of state.devices){
+    const label={tracker:'Tracker',base:'base station',hmd:'HMD (null driver)',controller:'controller'}[d.kind]||d.kind;
+    const col=d.valid?'var(--ok)':'var(--bad)';
+    h+=`<div class="dev">
+      <div class="name"><span class="dot" style="background:${col}"></span>${d.serial}
+        <span class="kind">${label}</span></div>`;
+    if(d.valid){
+      h+=`<div class="row">pos <b>${n3(d.pos[0])} ${n3(d.pos[1])} ${n3(d.pos[2])}</b> m</div>
+          <div class="row">rpy <b>${d.rpy.map(v=>v.toFixed(1).padStart(7)).join(' ')}</b> °</div>`;
+    }else{
+      h+=`<div class="row warn">invalid pose (occluded / out of view / disconnected)</div>`;
+    }
+    if(d.battery!=null) h+=`<div class="row">battery <b>${(d.battery*100).toFixed(0)}%</b></div>`;
+    h+=`</div>`;
+  }
+  if(tk.length===2){
+    h+=`<div class="rel">distance between the trackers <b>${dist(tk[0].pos,tk[1].pos).toFixed(4)} m</b>
+        <br><span style="color:var(--dim)">relative quantities do not depend on the world origin</span></div>`;
+  }
+  el.innerHTML=h;
+}
+
+poll();
+draw();
+</script>
+</body>
+</html>

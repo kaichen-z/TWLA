@@ -1,0 +1,14 @@
+numpy
+scipy
+pin                      # pinocchio
+meshcat
+python-can
+opencv-contrib-python    # ArUco / ChArUco
+flask
+pillow
+pyrealsense2
+# robot SDK: pip install git+https://github.com/RealHand-Robotics/realbot-python-sdk.git
+# teleoperation:
+#   openvr                 Vive Tracker server (vive/), needs SteamVR
+#   wuji_sdk               Wuji glove SDK, installed from the vendor
+#   ffmpeg, Tk             system packages (video recording, desktop UI)
