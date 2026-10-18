@@ -10,7 +10,7 @@
 [![Robot Demos](https://img.shields.io/badge/Robot-Demos-0f766e?style=for-the-badge)](https://anonymous-submission-20.github.io/T-WLA.github.io/#robot)
 [![Weights](https://img.shields.io/badge/Hugging_Face-Weights-f59e0b?style=for-the-badge)](#pretrained-weights)
 
-[Overview](#overview) · [Quick Start](#quick-start) · [Pretrained Weights](#pretrained-weights) · [Training](#training) · [Inference](#inference) · [Evaluation](#evaluation) · [Citation](#citation)
+[Overview](#overview) · [Quick Start](#quick-start) · [Pretrained Weights](#pretrained-weights) · [Training](#training) · [Inference](#inference) · [Evaluation](#evaluation)
 
 </div>
 
@@ -281,18 +281,6 @@ Implementation-specific details are collected in [Reproduction Notes](docs/repro
 ## Acknowledgments
 
 This work builds on SmolVLA/LeRobot, SmolVLM2, EgoTouch/OpenTouch, SANA, DC-AE, VITRA, and MemoryVLA. Please follow each upstream model and dataset's access and licensing terms. See [dependencies and attribution](docs/reproduction-notes.md#dependencies-and-attribution) for details.
-
-## Citation
-
-If you find T-WLA useful, please cite the project. This entry uses the project page; no arXiv identifier or publication venue is assumed.
-
-```bibtex
-@misc{twla2026,
-  title = {{T-WLA}: Bridging Slow Vision and Fast Touch},
-  year  = {2026},
-  url   = {https://anonymous-submission-20.github.io/T-WLA.github.io/}
-}
-```
 
 ---
 
