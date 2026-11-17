@@ -6,8 +6,8 @@
 
 **Shared visual memory connects visual planning with fast tactile correction.**
 
-[![Project Page](https://img.shields.io/badge/Project-Page-2563eb?style=for-the-badge)](https://anonymous-submission-20.github.io/T-WLA.github.io/)
-[![Robot Demos](https://img.shields.io/badge/Robot-Demos-0f766e?style=for-the-badge)](https://anonymous-submission-20.github.io/T-WLA.github.io/#robot)
+[![Project Page](https://img.shields.io/badge/Project-Page-2563eb?style=for-the-badge)](https://t-wla.github.io/)
+[![Robot Demos](https://img.shields.io/badge/Robot-Demos-0f766e?style=for-the-badge)](https://t-wla.github.io/#robot)
 [![Weights](https://img.shields.io/badge/Hugging_Face-Weights-f59e0b?style=for-the-badge)](#pretrained-weights)
 
 [Overview](#overview) · [Quick Start](#quick-start) · [Pretrained Weights](#pretrained-weights) · [Training](#training) · [Inference](#inference) · [Evaluation](#evaluation)
@@ -15,7 +15,7 @@
 </div>
 
 <p align="center">
-  <a href="https://anonymous-submission-20.github.io/T-WLA.github.io/#method">
+  <a href="https://t-wla.github.io/#method">
     <img src="assets/method-overview.png" width="1000" alt="T-WLA: a visual branch produces visual memory and base actions; a lightweight tactile editor reuses that memory to correct the remaining actions between RGB updates.">
   </a>
 </p>
@@ -37,7 +37,7 @@ corrected actions = original base actions + masked tactile residuals
 
 Each tactile update revises only valid, unexecuted actions relative to the original plan. A new RGB update replaces the visual memory and base chunk.
 
-The paper evaluates tactile-conditioned hand-motion prediction on **EgoTouch and Tachin**, visual-only prediction on **GigaHands, OakInk2, and TACO**, and four real-robot tasks: **egg transfer, single-sheet pickup, paper-cup nesting, and paper-bag dragging**. Reported results include a **30% reduction in EgoTouch finger-joint MPJPE** relative to the strongest reported baseline and **50.0% average robot success** with **30 demonstrations per task**. See the [project page](https://anonymous-submission-20.github.io/T-WLA.github.io/) for qualitative comparisons and robot videos.
+The paper evaluates tactile-conditioned hand-motion prediction on **EgoTouch and Tachin**, visual-only prediction on **GigaHands, OakInk2, and TACO**, and four real-robot tasks: **egg transfer, single-sheet pickup, paper-cup nesting, and paper-bag dragging**. Reported results include a **30% reduction in EgoTouch finger-joint MPJPE** relative to the strongest reported baseline and **50.0% average robot success** with **30 demonstrations per task**. See the [project page](https://t-wla.github.io/) for qualitative comparisons and robot videos.
 
 This repository provides the **visual foundation model, tactile encoder pretraining, tactile-editor training, predictive objectives, baseline implementations, and robot hardware tools**.
 
@@ -285,7 +285,7 @@ This work builds on SmolVLA/LeRobot, SmolVLM2, EgoTouch/OpenTouch, SANA, DC-AE, 
 ---
 
 <p align="center">
-  <a href="https://anonymous-submission-20.github.io/T-WLA.github.io/">Project Page</a> ·
-  <a href="https://anonymous-submission-20.github.io/T-WLA.github.io/#method">Method Overview</a> ·
-  <a href="https://anonymous-submission-20.github.io/T-WLA.github.io/#robot">Robot Demonstrations</a>
+  <a href="https://t-wla.github.io/">Project Page</a> ·
+  <a href="https://t-wla.github.io/#method">Method Overview</a> ·
+  <a href="https://t-wla.github.io/#robot">Robot Demonstrations</a>
 </p>
